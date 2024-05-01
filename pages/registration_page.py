@@ -3,6 +3,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from base.base_class import BaseClass
+from src import data
 
 
 class RegistrationPage(BaseClass):
@@ -13,6 +14,7 @@ class RegistrationPage(BaseClass):
     input_password = "//fieldset[@class='Auth_fieldset__1QzWN mb-6'][3]//input"
     btn_submit = "//form[@class='Auth_form__3qKeq mb-20'][1]//button"
     message_uncorrect_password = "//p[@class='input__error text_type_main-default']"
+    btn_already_login = "//a[text()='Войти']"
 
     # Getters
     def get_input_name(self):
@@ -30,6 +32,9 @@ class RegistrationPage(BaseClass):
     def get_message_uncorrect_password(self):
         return WebDriverWait(self.browser, 30).until(EC.element_to_be_clickable((By.XPATH, self.message_uncorrect_password)))
 
+    def get_btn_already_login(self):
+        return WebDriverWait(self.browser, 30).until(EC.element_to_be_clickable((By.XPATH, self.btn_already_login)))
+
     # Actions
     def input_input_name(self):
         self.get_input_name().send_keys(self.generate_name())
@@ -42,6 +47,9 @@ class RegistrationPage(BaseClass):
 
     def click_btn_submit(self):
         self.get_btn_submit().click()
+
+    def click_btn_already_login(self):
+        self.get_btn_already_login().click()
 
     # Metods
     def make_registration(self, password):

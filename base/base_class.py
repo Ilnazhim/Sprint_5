@@ -1,17 +1,17 @@
 import datetime
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from selenium.common import NoSuchElementException, TimeoutException
+from selenium.common import NoSuchElementException
 
 
 class BaseClass:
-    def __init__(self, browser, url):
+    def __init__(self, browser):
         self.browser = browser
-        self.url = url
 
-    def open(self):
+    def open(self, url):
         """Metod open browser"""
-        self.browser.get(self.url)
+        self.browser.get(url)
+        self.url = url
 
     @staticmethod
     def generate_name():
@@ -20,27 +20,28 @@ class BaseClass:
 
     @staticmethod
     def generate_email():
-        now_date = datetime.datetime.now().strftime("%f")
+        now_date = datetime.datetime.now().strftime("%M")
         return f'email{now_date}@yandex.ru'
 
     @staticmethod
     def generate_password():
-        now_date = datetime.datetime.now().strftime("%f")
+        now_date = datetime.datetime.now().strftime("1234%M")
         return f'{now_date}'
 
     def get_current_url(self):
         """Metod get current url"""
         return self.browser.current_url
 
-    """Metod assert word"""
-    def assert_word(self, word, result):
+    @staticmethod
+    def assert_word(word, result):
+        """Metod assert word"""
         value_word = word.text
         value_result = result
         assert value_word == value_result
         print("Good value word")
 
-    """Metod is element present"""
     def is_element_present(self, how, what):
+        """Metod is element present"""
         try:
             WebDriverWait(self.browser, 30).until(EC.element_to_be_clickable((how, what)))
             print("Assert element is present")
@@ -48,27 +49,8 @@ class BaseClass:
             return False
         return True
 
-    def is_not_element_present(self, how, what, timeout=1):
-        try:
-            WebDriverWait(self.browser, timeout).until(EC.presence_of_element_located((how, what)))
-        except TimeoutException:
-            return True
-
-        return False
-
-    def is_disappeared(self, how, what, timeout=4):
-        try:
-            WebDriverWait(self.browser, timeout, 1, TimeoutException). \
-                until_not(EC.presence_of_element_located((how, what)))
-        except TimeoutException:
-            return False
-
-        return True
-
-
-    """Metod assert url"""
     def assert_url(self, result):
+        """Metod assert url"""
         get_url = self.browser.current_url
         assert get_url == result
         print("Good value url")
-
