@@ -1,18 +1,17 @@
-import time
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from base.base_class import BaseClass
-from src import data
+from src import urls
 
 
 class RegistrationPage(BaseClass):
 
     # Locators
-    input_name = "//fieldset[@class='Auth_fieldset__1QzWN mb-6'][1]//input"
-    input_email = "//fieldset[@class='Auth_fieldset__1QzWN mb-6'][2]//input"
-    input_password = "//fieldset[@class='Auth_fieldset__1QzWN mb-6'][3]//input"
-    btn_submit = "//form[@class='Auth_form__3qKeq mb-20'][1]//button"
+    input_name = "//label[text()='Имя']/..//input"
+    input_email = "//label[text()='Email']/..//input"
+    input_password = "//input[@name='Пароль']"
+    btn_submit = "//button[text()='Зарегистрироваться']"
     message_uncorrect_password = "//p[@class='input__error text_type_main-default']"
     btn_already_login = "//a[text()='Войти']"
 
@@ -59,8 +58,7 @@ class RegistrationPage(BaseClass):
         self.click_btn_submit()
 
     def success_registration(self):
-        time.sleep(1)
-        self.assert_url('https://stellarburgers.nomoreparties.site/login')
+        self.assert_url(urls.URL + urls.LOGIN_PATH)
 
     def failed_registration(self):
         self.assert_word(self.get_message_uncorrect_password(), 'Некорректный пароль')

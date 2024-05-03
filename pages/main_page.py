@@ -1,9 +1,8 @@
-import time
-
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from base.base_class import BaseClass
+from src import urls
 
 
 class MainPage(BaseClass):
@@ -63,15 +62,11 @@ class MainPage(BaseClass):
         self.get_btn_buns().click()
 
     # Metods
-
     def success_open_main_page(self):
-        time.sleep(1)
-        self.assert_url("https://stellarburgers.nomoreparties.site/")
+        self.assert_url(urls.URL)
 
     def success_exit_from_site(self):
-        time.sleep(1)
-        self.assert_url("https://stellarburgers.nomoreparties.site/login")
+        self.assert_url(urls.URL + urls.LOGIN_PATH)
 
     def assert_success_vizible_element(self):
-        time.sleep(1)
         self.is_element_present(By.XPATH, self.success_vizible_element)

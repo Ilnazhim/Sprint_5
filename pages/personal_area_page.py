@@ -1,4 +1,3 @@
-import time
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -24,5 +23,4 @@ class PersonalPage(BaseClass):
 
     # Metods
     def success_login(self):
-        time.sleep(1)
         self.assert_word(self.get_success_text_profile(), 'Профиль')

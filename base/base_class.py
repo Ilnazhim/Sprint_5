@@ -38,13 +38,11 @@ class BaseClass:
         value_word = word.text
         value_result = result
         assert value_word == value_result
-        print("Good value word")
 
     def is_element_present(self, how, what):
         """Metod is element present"""
         try:
             WebDriverWait(self.browser, 30).until(EC.element_to_be_clickable((how, what)))
-            print("Assert element is present")
         except NoSuchElementException:
             return False
         return True
@@ -53,4 +51,3 @@ class BaseClass:
         """Metod assert url"""
         get_url = self.browser.current_url
         assert get_url == result
-        print("Good value url")

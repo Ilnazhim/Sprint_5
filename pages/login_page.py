@@ -1,4 +1,3 @@
-import time
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -9,14 +8,13 @@ from src import data
 class LoginPage(BaseClass):
 
     # Locators
-    input_email = "//fieldset[@class='Auth_fieldset__1QzWN mb-6'][1]//input"
-    input_password = "//fieldset[@class='Auth_fieldset__1QzWN mb-6'][2]//input"
-    btn_submit = "//form[@class='Auth_form__3qKeq mb-20'][1]//button"
+    input_email = "//label[text()='Email']/..//input"
+    input_password = "//input[@name='Пароль']"
+    btn_submit = "//button[text()='Войти']"
     success_login_text = "//button[text()='Оформить заказ']"
     btn_forgot_password = "//a[text()='Восстановить пароль']"
 
     # Getters
-
     def get_input_email(self):
         return WebDriverWait(self.browser, 30).until(EC.element_to_be_clickable((By.XPATH, self.input_email)))
 
@@ -48,11 +46,9 @@ class LoginPage(BaseClass):
 
     # Metods
     def login_to_site(self, password):
-        time.sleep(1)
         self.input_input_email()
         self.input_input_password(password)
         self.click_btn_submit()
 
     def success_login(self):
-        time.sleep(1)
         self.assert_word(self.get_success_login_text(), 'Оформить заказ')
